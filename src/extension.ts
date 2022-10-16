@@ -1,11 +1,13 @@
 // SMART TABS
-// Automatically moves changed tabs to the beginning/end of the group.
-// Author: valsorym <i@valsorym.com>
+// Automatically move tab with modified content closer
+// to the left or right edge of the list of tabs.
+//
+// Copyright valsorym <i@valsorym.com>, 2022.
 import * as vscode from 'vscode';
 
 
 // The first/last number of tabs that don't respond to changes.
-const FIXED_TABS = 3;
+const FIXED_TABS = 5;
 
 // The direction of moving tabs to the left (true) or to the right (false).
 const ACTIVE_FIRST: boolean = false;
@@ -13,7 +15,9 @@ const ACTIVE_FIRST: boolean = false;
 // Returns first not pinned tab number or zero.
 function getNotPinnedTabNum(activeGroup: vscode.TabGroup): number {
     for (let i = 0; i < activeGroup.tabs.length; i++) {
-        if (!activeGroup.tabs[i].isPinned) {
+        // Trying to find the first unpinned tab.
+        const tab = activeGroup.tabs[i];
+        if (!tab.isPinned) {
             return i;
         }
     }
@@ -29,7 +33,7 @@ function getActiveTabNum(
 ): number {
     const activeTab = activeGroup.activeTab;
     for (let i = 0; i < activeGroup.tabs.length; i++) {
-        // Try to find current tab index. 
+        // Trying to find the current tab index.
         const tab = activeGroup.tabs[i];
         if (tab.isActive && activeTab?.label === tab.label) {
             if (fromLeft) {
@@ -51,9 +55,9 @@ export function activate(context: vscode.ExtensionContext) {
             // Get configs.
             // Configurations can be left blank, then default
             // values will be used.
-            const config = vscode.workspace.getConfiguration("smart-tabs");
-            const fixedTabs = config.get("fixedTabs", FIXED_TABS);
-            const activeFirst = config.get("activeFirst", ACTIVE_FIRST);
+            const config = vscode.workspace.getConfiguration('smart-tabs');
+            const fixedTabs = config.get('fixedTabs', FIXED_TABS);
+            const activeFirst = config.get('activeFirst', ACTIVE_FIRST);
 
             // Get the active group of tabs.
             // Stop the command execution if there is no active group of tabs.
@@ -78,6 +82,8 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.commands.executeCommand('moveActiveEditor', {
                     to: 'first',
                     by: 'tab',
+                    // When moving the tab to the left, we take into
+                    // account the tabs pinned by the user.
                     value: activeTabNum - getNotPinnedTabNum(activeGroup),
                 });
             } else {
@@ -90,7 +96,6 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     // Move tabs when modifying a document.
-    // Option: `vscode.workspace.onWillSaveTextDocument`.
     vscode.workspace.onDidChangeTextDocument((e) => {
         vscode.commands.executeCommand('smart-tabs.moveTab');
     });
