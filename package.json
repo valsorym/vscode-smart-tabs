@@ -1,0 +1,76 @@
+{
+    "name": "smart-tabs",
+    "displayName": "Smart Tabs",
+    "description": "Automatically moves changed tabs to the beginning/end of the group.",
+    "version": "0.0.2",
+    "publisher": "valsorym",
+    "author": {
+        "name": "Valsorym"
+    },
+    "icon": "icon.png",
+    "license": "GPL-3.0",
+    "homepage": "https://github.com/valsorym/vscode-smart-tabs/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/valsorym/vscode-smart-tabs.git"
+    },
+    "engines": {
+        "vscode": "^1.72.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished",
+        "onCommand:smart-tabs.moveTab"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "smart-tabs.moveTab",
+                "title": "Smart Tabs"
+            }
+        ],
+        "configuration": {
+            "title": "Smart-Tabs",
+            "properties": {
+                "smart-tabs.activeFirst": {
+                    "type": "boolean",
+                    "scope": "resource",
+                    "default": true,
+                    "markdowDescription": "If `true`, the tabs are moved to the beginning of the list"
+                },
+                "smart-tabs.fixedTabs": {
+                    "type": "number",
+                    "scope": "resource",
+                    "default": 3,
+                    "markdowDescription": "The number of fixed tabs from the left/right side.",
+                    "maximum": 9,
+                    "minimum": 1
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.72.0",
+        "@types/glob": "^8.0.0",
+        "@types/mocha": "^10.0.0",
+        "@types/node": "16.x",
+        "@typescript-eslint/eslint-plugin": "^5.38.1",
+        "@typescript-eslint/parser": "^5.38.1",
+        "eslint": "^8.24.0",
+        "glob": "^8.0.3",
+        "mocha": "^10.0.0",
+        "typescript": "^4.8.4",
+        "@vscode/test-electron": "^2.1.5"
+    }
+}
