@@ -40,6 +40,9 @@
 import * as vscode from 'vscode';
 
 
+// A container to store all subscriptions.
+let disposables: vscode.Disposable[] = [];
+
 // FIXED_TABS
 // This constant defines the number of tabs at the beginning (or end,
 // based on the user's configuration) that should remain in their fixed
@@ -161,8 +164,8 @@ function getPositionAfterLastPinnedTab(
 // from the left (beginning) or from the right (end) based on the `fromLeft`
 // parameter.
 //
-// - If `fromLeft` is true, it returns the zero-based index of the active tab
-//   from the left.
+// - If `fromLeft` is true, it returns the zero-based index of the active
+//   tab from the left.
 // - If `fromLeft` is false, it returns the zero-based index from the right.
 //
 // This functionality is useful for deciding which direction to move the
@@ -219,7 +222,8 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     // Move tabs when modifying a document.
-    vscode.workspace.onDidChangeTextDocument(moveTabWithDebounce);
+    let s = vscode.workspace.onDidChangeTextDocument(moveTabWithDebounce);
+    disposables.push(s);
 
     // Retrieve configuration settings.
     // The user can customize the behavior of the extension through VSCode
@@ -287,6 +291,11 @@ export function activate(context: vscode.ExtensionContext) {
 
 // Deactivate extension.
 export function deactivate() {
+    // Dispose all subscriptions.
+    disposables.forEach(disposable => disposable.dispose());
+    disposables = [];
+
+    // Show a message to confirm deactivation.
     vscode.window.showInformationMessage('Successfully deactivated ' +
         'Smart-Tabs extension.');
 }
