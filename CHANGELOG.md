@@ -2,8 +2,11 @@
 
 ## Latest
 
-- Improved performance of the extension.
-- Fixed errors when working with pinned tabs.
+Updated license.
+
+### [0.1.3] - 2023.10.16
+
+- New license.
 
 ## [0.1.0] - 2023.10.16
 

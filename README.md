@@ -61,10 +61,11 @@ Copyright valsorym, 2022-2023.
 
 ## Release Notes
 
-Improved performance of the extension.
-Fixed errors when working with pinned tabs.
+Updated license.
 
-*P.s. Thanks to [huyz](https://github.com/huyz) for finding this problem.*
+### 0.1.3
+
+- New license.
 
 ### 0.1.0
 
