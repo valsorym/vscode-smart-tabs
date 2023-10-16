@@ -2,7 +2,11 @@
 
 ## Latest
 
-Optimizing the search for the active tab and viewing the configuration file. The configuration file is checked only when the extension is started, or when it is edited (previously, every time when editing a tab).
+Added unsubscribe upon deactivation.
+
+## [1.1.0] - 2023.10.16
+
+- Unsubscribing.
 
 ## [1.0.0] - 2023.10.16
 

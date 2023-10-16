@@ -2,7 +2,7 @@
     "name": "smart-tabs",
     "displayName": "Smart Tabs",
     "description": "Automatically repositions the tab of edited content to either the left or right end of the tab list for easier access.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "publisher": "valsorym",
     "author": {
         "name": "Valsorym"
