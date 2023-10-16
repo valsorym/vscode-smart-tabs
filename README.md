@@ -28,6 +28,7 @@ Enhance your tab management in Visual Studio Code with `Smart Tabs`! This extens
 ### smart-tabs.activeFirst
 
 **Type**: Boolean
+
 **Default**: false
 
 Determines the direction of movement for the modified tab.
@@ -38,6 +39,7 @@ Determines the direction of movement for the modified tab.
 ## smart-tabs.fixedTabs
 
 **Type**: Integer (Range: 1-9)
+
 **Default**: 5
 
 Specifies the number of tabs that should always remain fixed either at the start or end of the tab list. This depends on the `activeFirst` value. Tabs within this fixed group will not be automatically moved, even if their content is modified.
