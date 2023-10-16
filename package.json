@@ -1,8 +1,8 @@
 {
     "name": "smart-tabs",
     "displayName": "Smart Tabs",
-    "description": "Automatically move tab with modified content closer to the left or right edge of the list of tabs.",
-    "version": "0.1.4",
+    "description": "Automatically repositions the tab of edited content to either the left or right end of the tab list for easier access.",
+    "version": "1.0.0",
     "publisher": "valsorym",
     "author": {
         "name": "Valsorym"
@@ -50,15 +50,23 @@
                     "type": "boolean",
                     "scope": "resource",
                     "default": true,
-                    "description": "Move active tabs to the top of the list.",
+                    "description": "Moves active tabs to the beginning of the list when they become active.",
                     "order": 1
                 },
                 "smart-tabs.fixedTabs": {
                     "type": "number",
                     "scope": "resource",
-                    "default": 5,
-                    "description": "The number of fixed tabs.",
+                    "default": 3,
+                    "description": "Specifies the number of tabs that remain static at the top of the tab bar.",
                     "maximum": 9,
+                    "minimum": 1
+                },
+                "smart-tabs.debounceDelay": {
+                    "type": "number",
+                    "scope": "resource",
+                    "default": 300,
+                    "description": "The delay in milliseconds before invoking the smart-tabs.moveTab command after content is modified.",
+                    "maximum": 1000,
                     "minimum": 1
                 }
             }
@@ -84,5 +92,8 @@
         "glob": "^8.0.3",
         "mocha": "^10.0.0",
         "typescript": "^4.8.4"
+    },
+    "dependencies": {
+        "vsce": "^1.103.1"
     }
 }
