@@ -2,7 +2,11 @@
 
 ## Latest
 
-Added unsubscribe upon deactivation.
+Correction of inaccuracies in the documentation.
+
+## [1.1.1] - 2023.10.16
+
+- Documentation update.
 
 ## [1.1.0] - 2023.10.16
 

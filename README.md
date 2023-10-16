@@ -36,20 +36,34 @@ Determines the direction of movement for the modified tab.
 - If set to true, the modified tab will be moved towards the beginning (left side) of the tab list.
 - If set to false, the tab will be moved towards the end (right side).
 
-## smart-tabs.fixedTabs
+### smart-tabs.fixedTabs
 
-**Type**: Integer (Range: 1-9)
+**Type**: Integer
 
-**Default**: 5
+**Default**: `5`
+
+**Range**: `1`-`9`
 
 Specifies the number of tabs that should always remain fixed either at the start or end of the tab list. This depends on the `activeFirst` value. Tabs within this fixed group will not be automatically moved, even if their content is modified.
+
+### smart-tabs.debounceDelay
+
+**Type**: `Number`
+
+**Default**: `300`
+
+**Range**: `1` - `1000`
+
+This setting defines the delay (in milliseconds) before the `smart-tabs.moveTab` command is invoked after modifying a tab. It ensures that frequent content changes do not trigger excessive tab movement, improving the user experience.
+
 
 ## Installation
 
 1. Open Visual Studio Code and Navigate to Extensions.
-2. Search for `Smart Tabs` by `Valsorym`.
+2. Search for `Valsorym.smart-tabs`.
 3. Click `install` and enjoy enhanced tab management!
 
+Or, launch VS Code Quick Open (Ctrl+P), paste the `ext install Valsorym.smart-tabs`, and press enter.
 
 ## Feedback and Contribution
 
