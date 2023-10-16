@@ -58,31 +58,3 @@ Your feedback is valuable! If you have any suggestions, issues, or would like to
 ## License
 
 Copyright valsorym, 2022-2023.
-
-## Release Notes
-
-Updated license.
-
-### 0.1.3
-
-- New license.
-
-### 0.1.0
-
-- Change icon.
-- Fixed problems with moving tabs in front of pinned tabs.
-- Fixed problems with moving pinned tabs.
-
-### 0.0.3
-
-- Change icon.
-- Fixed minor bugs.
-
-### 0.0.2
-
-- Change icon.
-- Fixed the bug of moving tabs with the same label.
-
-### 0.0.1
-
-- Initial.

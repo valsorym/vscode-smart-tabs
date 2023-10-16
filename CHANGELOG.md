@@ -2,7 +2,11 @@
 
 ## Latest
 
-Updated license.
+Added to VS Code Extensions.
+
+## [0.1.4] - 2023.10.16
+
+- Extension added to VS Code Extensions.
 
 ## [0.1.3] - 2023.10.16
 
