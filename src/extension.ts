@@ -55,7 +55,7 @@ let disposables: vscode.Disposable[] = [];
 // positions.
 //
 // Default value: 5
-const FIXED_TABS = 3;
+const FIXED_TABS: number = 3;
 
 // ACTIVE_FIRST
 // A boolean constant that determines the direction of automatic tab movement.
@@ -77,7 +77,7 @@ const ACTIVE_FIRST: boolean = true;
 // do not trigger excessive tab movement, improving user experience.
 //
 // Default value: 300 (milliseconds).
-const DEFAULT_DEBOUNCE_DELAY = 300;
+const DEFAULT_DEBOUNCE_DELAY: number = 300;
 
 // These are global variables that store the configuration settings for the
 // Smart Tabs extension. By making them global, we can ensure that the
@@ -91,9 +91,9 @@ const DEFAULT_DEBOUNCE_DELAY = 300;
 // `activeFirst` indicates the direction of automatic tab movement.
 // `debounceDelay` defines the delay before the `smart-tabs.moveTab` command
 //  is invoked after a tab is modified.
-let fixedTabs = FIXED_TABS;
-let activeFirst = ACTIVE_FIRST;
-let debounceDelay = DEFAULT_DEBOUNCE_DELAY;
+let fixedTabs: number = FIXED_TABS;
+let activeFirst: boolean = ACTIVE_FIRST;
+let debounceDelay: number = DEFAULT_DEBOUNCE_DELAY;
 
 // This variable stores the timer used to debounce the `smart-tabs.moveTab`.
 let isDebouncing: boolean = false;
@@ -121,14 +121,19 @@ function loadConfigurations() {
 // will only be executed once after the last invocation and after the specified
 // delay has passed.
 function moveTabWithDebounce() {
-    // If there's already a timer, don't create another one.
-    if (isDebouncing) {
-        return;
-    }
+    if (debounceDelay === 0) {
+        // If the delay is set to 0, the command is executed immediately.
+        vscode.commands.executeCommand('smart-tabs.moveTab');
+    } else {
+        // If there's already a timer, don't create another one.
+        if (isDebouncing) {
+            return;
+        }
 
-    isDebouncing = true;
-    vscode.commands.executeCommand('smart-tabs.moveTab');
-    setTimeout(() => { isDebouncing = false; }, debounceDelay);
+        isDebouncing = true;
+        vscode.commands.executeCommand('smart-tabs.moveTab');
+        setTimeout(() => { isDebouncing = false; }, debounceDelay);
+    }
 }
 
 // This function computes and returns the position immediately after the last
@@ -177,7 +182,7 @@ function getPositionAfterLastPinnedTab(
 //    true for counting from the left, false for the right.
 // @returns {number} - zero-based index of the active tab based on the
 //    specified direction.
-function getActiveTabNum(
+function getActiveTabIndex(
     activeGroup: vscode.TabGroup,
     fromLeft: boolean,
 ): number {
@@ -255,7 +260,7 @@ export function activate(context: vscode.ExtensionContext) {
             const offset = getPositionAfterLastPinnedTab(activeGroup);
 
             // Determine the position of the active tab.
-            const activeTabNum = getActiveTabNum(activeGroup, activeFirst);
+            const activeTabNum = getActiveTabIndex(activeGroup, activeFirst);
 
             // Move the modified tab based on the user's preferred direction.
             // If `activeFirst` is set to true, the tab is moved towards the

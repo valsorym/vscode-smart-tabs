@@ -2,7 +2,7 @@
     "name": "smart-tabs",
     "displayName": "Smart Tabs",
     "description": "Automatically repositions the tab of edited content to either the left or right end of the tab list for easier access.",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "publisher": "valsorym",
     "author": {
         "name": "Valsorym"
@@ -26,14 +26,13 @@
         "url": "https://github.com/valsorym/vscode-smart-tabs.git"
     },
     "engines": {
-        "vscode": "^1.72.0"
+        "vscode": "^1.83.0"
     },
     "categories": [
         "Other"
     ],
     "activationEvents": [
-        "onStartupFinished",
-        "onCommand:smart-tabs.moveTab"
+        "onStartupFinished"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -65,9 +64,9 @@
                     "type": "number",
                     "scope": "resource",
                     "default": 300,
-                    "description": "The delay in milliseconds before invoking the smart-tabs.moveTab command after content is modified.",
-                    "maximum": 1000,
-                    "minimum": 1
+                    "description": "The delay in milliseconds between checking for tab content changes and calling the smart-tabs.moveTab command. Set to 0 to disable this.",
+                    "maximum": 5000,
+                    "minimum": 0
                 }
             }
         }
@@ -81,19 +80,15 @@
         "test": "node ./out/test/runTest.js"
     },
     "devDependencies": {
-        "@types/glob": "^8.0.0",
-        "@types/mocha": "^10.0.0",
-        "@types/node": "16.x",
-        "@types/vscode": "^1.72.0",
-        "@typescript-eslint/eslint-plugin": "^5.38.1",
-        "@typescript-eslint/parser": "^5.38.1",
-        "@vscode/test-electron": "^2.1.5",
-        "eslint": "^8.24.0",
-        "glob": "^8.0.3",
-        "mocha": "^10.0.0",
-        "typescript": "^4.8.4"
-    },
-    "dependencies": {
-        "vsce": "^1.103.1"
+        "@types/vscode": "^1.83.0",
+        "@types/mocha": "^10.0.2",
+        "@types/node": "18.x",
+        "@typescript-eslint/eslint-plugin": "^6.7.3",
+        "@typescript-eslint/parser": "^6.7.3",
+        "eslint": "^8.50.0",
+        "glob": "^10.3.3",
+        "mocha": "^10.2.0",
+        "typescript": "^5.2.2",
+        "@vscode/test-electron": "^2.3.4"
     }
 }

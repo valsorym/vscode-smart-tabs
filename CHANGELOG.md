@@ -2,9 +2,13 @@
 
 ## Latest
 
-Correction of inaccuracies in the documentation.
+Updated dependencies.
 
-## [1.1.1] - 2023.10.16
+## [1.2.0] - 2023.10.18
+
+- Updated dependencies.
+
+## [1.2.0] - 2023.10.16
 
 - Documentation update.
 
