@@ -4,6 +4,10 @@
 
 Added the ability to choose the type of event that will force the tab to move.
 
+## [1.3.1] - 2023.10.25
+
+- Support for `none` and `onopen` events for tab movement.
+
 ## [1.3.0] - 2023.10.25
 
 - Support for `onedit`, `onfocus` and `onsvae` events for tab movement.

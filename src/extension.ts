@@ -108,7 +108,8 @@ const DEFAULT_REACTION_EVENT = 'onedit';
 let fixedTabs: number = FIXED_TABS;
 let activeFirst: boolean = ACTIVE_FIRST;
 let debounceDelay: number = DEFAULT_DEBOUNCE_DELAY;
-let reactionEvent: 'onedit' | 'onsave' | 'onfocus' = DEFAULT_REACTION_EVENT;
+let reactionEvent: 'onedit' | 'onsave' | 'onfocus' |
+    'onopen' | 'none' = DEFAULT_REACTION_EVENT;
 
 // This variable stores the timer used to debounce the `smart-tabs.moveTab`.
 let isDebouncing: boolean = false;
@@ -144,13 +145,22 @@ function setupEventListeners() {
     let e: vscode.Disposable;
     switch (reactionEvent) {
         case 'onfocus':
+            // This event is triggered when a document gains focus.
             e = vscode.window.onDidChangeActiveTextEditor(moveTabWithDebounce);
             break;
         case 'onsave':
-            // or onDidSaveTextDocument
+            // This event is triggered when a document is saved.
             e = vscode.workspace.onWillSaveTextDocument(moveTabWithDebounce);
             break;
+        case 'onopen':
+            // This event is triggered when a new document is opened.
+            e = vscode.workspace.onDidOpenTextDocument(moveTabWithDebounce);
+            break;
+        case 'none':
+            // Disable the extension.
+            return;
         default:
+            // This event is triggered when a document is modified.
             e = vscode.workspace.onDidChangeTextDocument(moveTabWithDebounce);
     }
 

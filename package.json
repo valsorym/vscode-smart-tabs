@@ -2,7 +2,7 @@
     "name": "smart-tabs",
     "displayName": "Smart Tabs",
     "description": "Automatically repositions the tab of edited content to either the left or right end of the tab list for easier access.",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "publisher": "valsorym",
     "author": {
         "name": "Valsorym"
@@ -75,9 +75,11 @@
                     "enum": [
                         "onedit",
                         "onsave",
-                        "onfocus"
+                        "onfocus",
+                        "onopen",
+                        "none"
                     ],
-                    "description": "Define the event in which the tab is moved: `onedit` - when the tab content is edited; `onsave` - when the tab content is saved; `onfocus` - when the tab is focused."
+                    "description": "Define the event in which the tab is moved: `onedit` - when the tab content is edited; `onsave` - when the tab content is saved; `onfocus` - when the tab is focused; `onopen` - when the tab is opened; `none` - disable extension."
                 }
             }
         }
