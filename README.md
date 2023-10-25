@@ -56,7 +56,7 @@ The delay in milliseconds between checking for tab content changes and calling t
 
 - **Type**: String
 - **Default**: `onedit`
-- **Options**: `onedit`, `onfocus`, `onsave`, `onopen`.
+- **Options**: `onedit`, `onfocus`, `onsave`, `onopen`, `none`.
 
 Specifies the event that triggers the tab to move:
 
@@ -64,6 +64,7 @@ Specifies the event that triggers the tab to move:
 - `onfocus`: The tab will move whenever it gains focus.
 - `onsave`: The tab will move whenever the content is saved.
 - `onopen`: The tab will move when a new window is opened only.
+- `none`: Disable extension.
 
 This setting allows users to customize when they want tabs to be automatically repositioned based on their personal workflow and preference.
 

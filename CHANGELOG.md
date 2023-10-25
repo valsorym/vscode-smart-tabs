@@ -2,7 +2,11 @@
 
 ## Latest
 
-Added the ability to choose the type of event that will force the tab to move.
+Code refactoring.
+
+## [1.3.2] - 2023.10.25
+
+- Code refactoring.
 
 ## [1.3.1] - 2023.10.25
 

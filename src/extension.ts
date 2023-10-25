@@ -40,6 +40,17 @@
 import * as vscode from 'vscode';
 
 
+// Defines the types of events that trigger the tab movement
+// in the Smart-Tabs extension.
+//
+// - `onedit`: Triggered when a document is edited.
+// - `onsave`: Triggered when a document is saved.
+// - `onfocus`: Triggered when the editor's active tab is changed.
+// - `onopen`: Triggered when a new document is opened.
+// - `none`: No event will trigger the tab movement.
+type ReactionEvent = 'onedit' | 'onsave' | 'onfocus' | 'onopen' | 'none';
+
+
 // A container to store all subscriptions.
 let disposables: vscode.Disposable[] = [];
 
@@ -85,7 +96,9 @@ const DEFAULT_DEBOUNCE_DELAY: number = 300;
 // - onedit - the tab is repositioned when its content is edited;
 // - onsave - the tab is repositioned when its content is saved;
 // - onfocus - the tab is repositioned when it gains focus.
-const DEFAULT_REACTION_EVENT = 'onedit';
+// - onopen - the tab is repositioned when a new document is opened.
+// - none - the tab is not repositioned automatically.
+const DEFAULT_REACTION_EVENT: ReactionEvent = 'onedit';
 
 // These are global variables that store the configuration settings for the
 // Smart Tabs extension. By making them global, we can ensure that the
@@ -103,13 +116,14 @@ const DEFAULT_REACTION_EVENT = 'onedit';
 //   the tab. It can take the following values:
 //    - 'onedit' - the tab is repositioned when its content is edited;
 //    - 'onfocus' - the tab is repositioned when it gains focus;
-//    - 'onsave' - the tab is repositioned when its content is saved.
+//    - 'onsave' - the tab is repositioned when its content is saved;
+//    - 'onopen' - the tab is repositioned when a new document is opened;
+//    - 'none' - the tab is not repositioned automatically.
 //   Default behavior is set to reposition on edit.
 let fixedTabs: number = FIXED_TABS;
 let activeFirst: boolean = ACTIVE_FIRST;
 let debounceDelay: number = DEFAULT_DEBOUNCE_DELAY;
-let reactionEvent: 'onedit' | 'onsave' | 'onfocus' |
-    'onopen' | 'none' = DEFAULT_REACTION_EVENT;
+let reactionEvent: ReactionEvent = DEFAULT_REACTION_EVENT;
 
 // This variable stores the timer used to debounce the `smart-tabs.moveTab`.
 let isDebouncing: boolean = false;
