@@ -52,6 +52,21 @@ Specifies the number of tabs that should always remain fixed either at the start
 The delay in milliseconds between checking for tab content changes and calling the smart-tabs.moveTab command. Set to 0 to disable this. It ensures that frequent content changes do not trigger excessive tab movement, improving the user experience. Set to 0 to disable this.
 
 
+### `smart-tabs.reactionEvent`
+
+- **Type**: String
+- **Default**: `onedit`
+- **Options**: `onedit`, `onfocus`, `onsave`
+
+Specifies the event that triggers the tab to move:
+
+- `onedit`: The tab will move whenever its content is edited.
+- `onfocus`: The tab will move whenever it gains focus.
+- `onsave`: The tab will move whenever the content is saved.
+
+This setting allows users to customize when they want tabs to be automatically repositioned based on their personal workflow and preference.
+
+
 ## Installation
 
 1. Open Visual Studio Code and Navigate to Extensions.

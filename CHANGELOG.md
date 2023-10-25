@@ -2,13 +2,17 @@
 
 ## Latest
 
-Updated dependencies.
+Added the ability to choose the type of event that will force the tab to move.
+
+## [1.3.0] - 2023.10.25
+
+- Support for `onedit`, `onfocus` and `onsvae` events for tab movement.
 
 ## [1.2.0] - 2023.10.18
 
 - Updated dependencies.
 
-## [1.2.0] - 2023.10.16
+## [1.1.1] - 2023.10.16
 
 - Documentation update.
 

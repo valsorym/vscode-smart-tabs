@@ -79,6 +79,14 @@ const ACTIVE_FIRST: boolean = true;
 // Default value: 300 (milliseconds).
 const DEFAULT_DEBOUNCE_DELAY: number = 300;
 
+// DEFAULT_REACTION_EVENT
+// This constant defines the default trigger for repositioning the tab after
+// its content is modified. It can take the following values:
+// - onedit - the tab is repositioned when its content is edited;
+// - onsave - the tab is repositioned when its content is saved;
+// - onfocus - the tab is repositioned when it gains focus.
+const DEFAULT_REACTION_EVENT = 'onedit';
+
 // These are global variables that store the configuration settings for the
 // Smart Tabs extension. By making them global, we can ensure that the
 // configuration is loaded once during the activation process and can be
@@ -87,13 +95,20 @@ const DEFAULT_DEBOUNCE_DELAY: number = 300;
 // improves the efficiency of the extension by reducing repetitive
 // configuration lookups.
 //
-// `fixedTabs` stores the number of tabs that remain fixed at their positions.
-// `activeFirst` indicates the direction of automatic tab movement.
-// `debounceDelay` defines the delay before the `smart-tabs.moveTab` command
-//  is invoked after a tab is modified.
+// - fixedTabs stores the number of tabs that remain fixed at their positions.
+// - activeFirst indicates the direction of automatic tab movement.
+// - debounceDelay defines the delay before the `smart-tabs.moveTab` command
+//   is invoked after a tab is modified.
+// - reactionEvent determines the user's preferred trigger for repositioning
+//   the tab. It can take the following values:
+//    - 'onedit' - the tab is repositioned when its content is edited;
+//    - 'onfocus' - the tab is repositioned when it gains focus;
+//    - 'onsave' - the tab is repositioned when its content is saved.
+//   Default behavior is set to reposition on edit.
 let fixedTabs: number = FIXED_TABS;
 let activeFirst: boolean = ACTIVE_FIRST;
 let debounceDelay: number = DEFAULT_DEBOUNCE_DELAY;
+let reactionEvent: 'onedit' | 'onsave' | 'onfocus' = DEFAULT_REACTION_EVENT;
 
 // This variable stores the timer used to debounce the `smart-tabs.moveTab`.
 let isDebouncing: boolean = false;
@@ -112,6 +127,34 @@ function loadConfigurations() {
     fixedTabs = config.get('fixedTabs', FIXED_TABS);
     activeFirst = config.get('activeFirst', ACTIVE_FIRST);
     debounceDelay = config.get('debounceDelay', DEFAULT_DEBOUNCE_DELAY);
+    reactionEvent = config.get('reactionEvent', DEFAULT_REACTION_EVENT);
+}
+
+// Sets up the appropriate event listeners based on the user's configuration.
+//
+// This function first clears any existing listeners to ensure that no
+// redundant listeners are active. It then checks the current setting for
+// the `reactionEvent` configuration and attaches the relevant event listener
+// to the desired action, such as editing, focusing, or saving a tab.
+function setupEventListeners() {
+    // Clear existing listeners first.
+    disposables.forEach(disposable => disposable.dispose());
+    disposables = [];
+
+    let e: vscode.Disposable;
+    switch (reactionEvent) {
+        case 'onfocus':
+            e = vscode.window.onDidChangeActiveTextEditor(moveTabWithDebounce);
+            break;
+        case 'onsave':
+            // or onDidSaveTextDocument
+            e = vscode.workspace.onWillSaveTextDocument(moveTabWithDebounce);
+            break;
+        default:
+            e = vscode.workspace.onDidChangeTextDocument(moveTabWithDebounce);
+    }
+
+    disposables.push(e);
 }
 
 // This function ensures that the `smart-tabs.moveTab` command is not triggered
@@ -214,21 +257,18 @@ function getActiveTabIndex(
 // 3. Listens for changes in any document and triggers the tab movement
 //    command when modifications are detected.
 export function activate(context: vscode.ExtensionContext) {
-    // Load configurations.
-    loadConfigurations();
+    loadConfigurations(); // load configurations
+    setupEventListeners(); // event for move tab
 
     // Update settings.
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration(e => {
             if (e.affectsConfiguration('smart-tabs')) {
-                loadConfigurations();
+                loadConfigurations(); // load configurations
+                setupEventListeners(); // event for move tab
             }
         })
     );
-
-    // Move tabs when modifying a document.
-    let s = vscode.workspace.onDidChangeTextDocument(moveTabWithDebounce);
-    disposables.push(s);
 
     // Retrieve configuration settings.
     // The user can customize the behavior of the extension through VSCode
